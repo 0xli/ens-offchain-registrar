@@ -22,8 +22,9 @@ export default function App() {
 
   const { data, isLoading, signMessage, variables } = useSignMessage()
 
+  const L1ensname = "beagles";
   const requestBody: WorkerRequest = {
-    name: `${debouncedName}.depin.eth`,
+    name: `${debouncedName}.${L1ensname}.eth`,
     owner: address!,
     addresses: { '60': address },
     texts: { description },
@@ -70,14 +71,14 @@ export default function App() {
           onSubmit={(e) => {
             e.preventDefault()
             signMessage({
-              message: `Register ${debouncedName}.depin.eth`,
+              message: `Register ${debouncedName}.${L1ensname}.eth`,
             })
           }}
         >
           <Input
             type="text"
             label="Name"
-            suffix=".depin.eth"
+            suffix=".beagles.eth"
             placeholder="ens"
             required
             disabled={!!data || !address}
@@ -111,7 +112,7 @@ export default function App() {
           <Helper>
             <p>
               Visit the{' '}
-              <Link href={`https://ens.app/${debouncedName}.depin.eth`}>
+              <Link href={`https://ens.app/${debouncedName}.${L1ensname}.eth`}>
                 ENS Manager
               </Link>{' '}
               to see your name
