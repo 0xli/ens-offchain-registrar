@@ -50,15 +50,15 @@ export default function App() {
   return (
     <>
       <Head>
-        <title>Offchain ENS Registrar</title>
-        <meta property="og:title" content="Offchain ENS Registrar" />
+        <title>Beagle Chat ENS Registrar</title>
+        <meta property="og:title" content="Beagle Chat ENS Registrar" />
         <meta
           name="description"
-          content="Quick demo of how offchain ENS names work"
+          content="Register subdomain of beagles.eth ENS names"
         />
         <meta
           property="og:description"
-          content="Quick demo of how offchain ENS names work"
+          content="Register subdomain of beagles.eth ENS names"
         />
       </Head>
 
@@ -88,7 +88,7 @@ export default function App() {
           <Input
             type="text"
             label="Description"
-            placeholder="Your portable web3 profile"
+            placeholder="Your beagle chat profile"
             disabled={!!data || !address}
             onChange={(e) => setDescription(e.target.value)}
           />
