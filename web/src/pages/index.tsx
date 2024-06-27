@@ -23,7 +23,7 @@ export default function App() {
   const { data, isLoading, signMessage, variables } = useSignMessage()
 
   const requestBody: WorkerRequest = {
-    name: `${debouncedName}.offchaindemo.eth`,
+    name: `${debouncedName}.depin.eth`,
     owner: address!,
     addresses: { '60': address },
     texts: { description },
@@ -37,7 +37,8 @@ export default function App() {
     data: gatewayData,
     error: gatewayError,
     isLoading: gatewayIsLoading,
-  } = useFetch(data && 'https://ens-gateway.gregskril.workers.dev/set', {
+//  } = useFetch(data && 'https://ens-gateway.gregskril.workers.dev/set', {
+  } = useFetch(data && 'https://ens-gateway.beaglechat.workers.dev/set', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -69,14 +70,14 @@ export default function App() {
           onSubmit={(e) => {
             e.preventDefault()
             signMessage({
-              message: `Register ${debouncedName}.offchaindemo.eth`,
+              message: `Register ${debouncedName}.depin.eth`,
             })
           }}
         >
           <Input
             type="text"
             label="Name"
-            suffix=".offchaindemo.eth"
+            suffix=".depin.eth"
             placeholder="ens"
             required
             disabled={!!data || !address}
@@ -110,7 +111,7 @@ export default function App() {
           <Helper>
             <p>
               Visit the{' '}
-              <Link href={`https://ens.app/${debouncedName}.offchaindemo.eth`}>
+              <Link href={`https://ens.app/${debouncedName}.depin.eth`}>
                 ENS Manager
               </Link>{' '}
               to see your name

@@ -3,9 +3,9 @@ main = "src/index.ts"
 compatibility_date = "2023-03-15"
 
 [[d1_databases]]
-binding = "DB"
+binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "offchaindemo"
-database_id = "6b30bc65-edda-4e25-bb5a-8681b0419031"
+database_id = "203838a1-1a3a-4cbb-8319-da57e77b7f76"
 
 # The necessary secrets are:
 # - PRIVATE_KEY
