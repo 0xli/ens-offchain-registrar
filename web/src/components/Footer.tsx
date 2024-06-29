@@ -14,7 +14,8 @@ export function Footer() {
         Docs
       </Link>
 
-      <Link href="https://github.com/gskril/ens-offchain-registrar">Repo</Link>
+      <Link href="https://beagle.chat">Beagle Chat</Link>
+        {/*<Link href="https://github.com/gskril/ens-offchain-registrar">Repo</Link>*/}
     </Container>
   )
 }

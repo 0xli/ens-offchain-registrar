@@ -11,6 +11,12 @@ export const Form = styled.form`
   width: 100%;
   gap: 1rem;
 `
+export const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+`
 
 export const Card = styled(ThorinCard)`
   width: 100%;

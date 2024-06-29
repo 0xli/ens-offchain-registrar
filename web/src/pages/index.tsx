@@ -7,7 +7,7 @@ import { useAccount, useSignMessage } from 'wagmi'
 import { Footer } from '@/components/Footer'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useFetch } from '@/hooks/useFetch'
-import { Card, Form, Helper, Link, Spacer } from '@/styles'
+import { Card, Form, Helper, Link, Spacer,Label } from '@/styles'
 import { WorkerRequest } from '@/types'
 
 export default function App() {
@@ -15,6 +15,9 @@ export default function App() {
 
   const [name, setName] = useState<string | undefined>(undefined)
   const [description, setDescription] = useState<string | undefined>(undefined)
+  const [displayName, setDisplayName] = useState<string | undefined>(undefined)
+  const [carrierAddress, setCarrierAddress] = useState<string | undefined>(undefined)
+  const [carrierUserId, setCarrierUserId] = useState<string | undefined>(undefined)
 
   const regex = new RegExp('^[a-z0-9-]+$')
   const debouncedName = useDebounce(name, 500)
@@ -27,7 +30,7 @@ export default function App() {
     name: `${debouncedName}.${L1ensname}.eth`,
     owner: address!,
     addresses: { '60': address },
-    texts: { description },
+    texts: { description, displayName,carrierAddress },
     signature: {
       hash: data!,
       message: variables?.message!,
@@ -65,6 +68,8 @@ export default function App() {
       <Spacer />
 
       <Card>
+        <Label>Get free subdomain name of beagles.eth </Label>
+        <Label>Not ETH needed, not gas fee </Label>
         <ConnectButton showBalance={false} />
 
         <Form
@@ -84,6 +89,13 @@ export default function App() {
             disabled={!!data || !address}
             onChange={(e) => setName(e.target.value)}
           />
+          <Input
+              type="text"
+              label="DisplayName"
+              placeholder="Your Display name"
+              disabled={!!data || !address}
+              onChange={(e) => setDisplayName(e.target.value)}
+          />
 
           <Input
             type="text"
@@ -92,6 +104,20 @@ export default function App() {
             disabled={!!data || !address}
             onChange={(e) => setDescription(e.target.value)}
           />
+          <Input
+              type="text"
+              label="carrierAddress"
+              placeholder="Your carrier address"
+              disabled={!!data || !address}
+              onChange={(e) => setCarrierAddress(e.target.value)}
+          />
+          {/*<Input*/}
+          {/*    type="text"*/}
+          {/*    label="carrierUserId"*/}
+          {/*    placeholder="Your carrier user id"*/}
+          {/*    disabled={!!data || !address}*/}
+          {/*    onChange={(e) => setCarrierUserId(e.target.value)}*/}
+          {/*/>*/}
 
           <Button
             type="submit"
