@@ -11,8 +11,22 @@ These choices allow for a scalable namespace with low cost (store up to 1M names
 
 - `/names` - GET - Returns all names from the database
 - `/get/{name}` - GET - Returns the records for a given name
+- `/getAddress/{address}` - GET - Returns the records for a given address
+- `/set` - POST - Adds a name to the database or upate the 
+```
+{
+"name":"fans.beagles.eth",
+"owner":"0x8A13185c7da27aa575F30f5F382a5C85Dac8730b",
+"addresses":{"60":"0x8A13185c7da27aa575F30f5F382a5C85Dac8730b"},
+"texts":
+{"description":"My Description",
+ "displayName":"Display name",
+ "carrierAddress":"carrier address"},
+"signature":
+{"hash":"0x77b0a1096f2e8e0d1b6a550c2b280af9ae6c734313426326ba907c5130b8fc4966ed0588f5b669d09cea5a01f79a4ed94679a3f262962658884f60c6a01f75931b","message":"Register fans.beagles.eth"}
+}
+```
 - `/lookup/{sender}/{data}.json` - GET - CCIP Read lookup
-- `/set` - POST - Adds a name to the database
 
 ## Run Locally
 

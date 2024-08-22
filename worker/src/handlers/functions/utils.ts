@@ -21,14 +21,19 @@ export function parseNameFromDb(
   return parseName(flatName)
 
   function parseName(name: SelectableKysely) {
-    return {
-      name: name.name,
-      owner: name.owner,
-      addresses: name.addresses ? JSON.parse(name.addresses) : undefined,
-      texts: name.texts ? JSON.parse(name.texts) : undefined,
-      contenthash: name.contenthash || undefined,
-      createdAt: name.createdAt,
-      updatedAt: name.updatedAt,
+    try {
+      return {
+        name: name.name,
+        owner: name.owner,
+        addresses: name.addresses ? JSON.parse(name.addresses) : undefined,
+        texts: name.texts ? JSON.parse(name.texts) : undefined,
+        contenthash: name.contenthash || undefined,
+        createdAt: name.createdAt,
+        updatedAt: name.updatedAt,
+      }
+
+    } catch (e) {
+      return nil;
     }
   }
 }

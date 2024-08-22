@@ -1,4 +1,5 @@
-name = "ens-gateway"
+#name = "ens-gateway"
+name = "beagle"
 main = "src/index.ts"
 compatibility_date = "2023-03-15"
 
