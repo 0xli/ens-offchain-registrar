@@ -12,6 +12,10 @@ These choices allow for a scalable namespace with low cost (store up to 1M names
 - `/names` - GET - Returns all names from the database
 - `/get/{name}` - GET - Returns the records for a given name
 - `/getAddress/{address}` - GET - Returns the records for a given address
+```
+https://ens-gateway.beaglechat.workers.dev/getAddress/0x8a13185c7da27aa575f30f5f382a5c85dac8730b
+![image](https://github.com/user-attachments/assets/031b04de-319d-45ac-beab-2fe53601524e)
+```  
 - `/set` - POST - Adds a name to the database or upate the 
 ```
 {
