@@ -18,6 +18,8 @@ export default function App() {
   const [displayName, setDisplayName] = useState<string | undefined>(undefined)
   const [carrierAddress, setCarrierAddress] = useState<string | undefined>(undefined)
   const [carrierUserId, setCarrierUserId] = useState<string | undefined>(undefined)
+  const [baseAddress, setBaseAddress] = useState<string | undefined>(address)
+  const [arbAddress, setArbAddress] = useState<string | undefined>(address)
 
   const regex = new RegExp('^[a-z0-9-]+$')
   const debouncedName = useDebounce(name, 500)
@@ -25,16 +27,29 @@ export default function App() {
 
   const { data, isLoading, signMessage, variables } = useSignMessage()
 
-  const L1ensname = "beagles";
-  const requestBody: WorkerRequest = {
+    const L1ensname = "beagles";
+  const nameData: WorkerRequest['signature']['message'] = {
+//    name: `${debouncedName}.offchaindemo.eth`,
+//  const requestBody: WorkerRequest = {
     name: `${debouncedName}.${L1ensname}.eth`,
     owner: address!,
+    // https://docs.ens.domains/web/resolution#multi-chain
+    addresses: {
+      '60': address,
+      '2147492101': baseAddress,
+      '2147525809': arbAddress,
+    },
+    texts: { description },
+  }
+
+  const requestBody: WorkerRequest = {
     addresses: { '60': address },
     texts: { description, displayName,carrierAddress },
     signature: {
       hash: data!,
-      message: variables?.message!,
+      message: nameData,
     },
+    expiration: new Date().getTime() + 60 * 60, // 1 hour
   }
 
   const {
@@ -75,9 +90,10 @@ export default function App() {
         <Form
           onSubmit={(e) => {
             e.preventDefault()
-            signMessage({
-              message: `Register ${debouncedName}.${L1ensname}.eth`,
-            })
+//            signMessage({
+//              message: `Register ${debouncedName}.${L1ensname}.eth`,
+//            })
+            signMessage({ message: JSON.stringify(nameData) })
           }}
         >
           <Input
@@ -118,6 +134,29 @@ export default function App() {
           {/*    disabled={!!data || !address}*/}
           {/*    onChange={(e) => setCarrierUserId(e.target.value)}*/}
           {/*/>*/}
+
+          <Input
+            type="text"
+            label="ETH Address"
+            defaultValue={address}
+            disabled
+          />
+
+          <Input
+            type="text"
+            label="Base Address"
+            defaultValue={address}
+            disabled={!!data || !address}
+            onChange={(e) => setBaseAddress(e.target.value)}
+          />
+
+          <Input
+            type="text"
+            label="Arb Address"
+            defaultValue={address}
+            disabled={!!data || !address}
+            onChange={(e) => setArbAddress(e.target.value)}
+          />
 
           <Button
             type="submit"

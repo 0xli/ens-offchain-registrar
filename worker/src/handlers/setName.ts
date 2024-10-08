@@ -1,5 +1,5 @@
-import { verifyMessage } from 'ethers/lib/utils'
 import { IRequest } from 'itty-router'
+import { verifyMessage } from 'viem'
 
 import { Env } from '../env'
 import { ZodNameWithSignature } from '../models'
@@ -15,7 +15,8 @@ export async function setName(request: IRequest, env: Env): Promise<Response> {
     return Response.json(response, { status: 400 })
   }
 
-  const { name, owner, signature } = safeParse.data
+  const { signature, expiration } = safeParse.data
+  const { name, owner } = signature.message
 
   // Only allow 3LDs, no nested subdomains
   if (name.split('.').length !== 3) {
@@ -25,13 +26,26 @@ export async function setName(request: IRequest, env: Env): Promise<Response> {
 
   // Validate signature
   try {
-    const signer = verifyMessage(signature.message, signature.hash)
-    if (signer.toLowerCase() !== owner.toLowerCase()) {
+    const isVerified = await verifyMessage({
+      address: owner,
+      message: JSON.stringify(signature.message),
+      signature: signature.hash,
+    })
+
+    if (!isVerified) {
       throw new Error('Invalid signer')
     }
   } catch (err) {
     console.error(err)
     const response = { success: false, error: err }
+    return Response.json(response, { status: 401 })
+  }
+
+  // Check the signature expiration
+  const now = Math.floor(Date.now())
+
+  if (expiration < now) {
+    const response = { success: false, error: 'Signature expired' }
     return Response.json(response, { status: 401 })
   }
 
@@ -46,7 +60,7 @@ export async function setName(request: IRequest, env: Env): Promise<Response> {
 
   // Save the name
   try {
-    await set(safeParse.data, env)
+    await set(signature.message, env)
     const response = { success: true }
     return Response.json(response, { status: 201 })
   } catch (err) {
