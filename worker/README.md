@@ -14,10 +14,12 @@ These choices allow for a scalable namespace with low cost (store up to 1M names
 - `/getAddress/{address}` - GET - Returns the records for a given address
 ```
 https://ens-gateway.beaglechat.workers.dev/getAddress/0x8a13185c7da27aa575f30f5f382a5c85dac8730b
+```
 ![image](https://github.com/user-attachments/assets/031b04de-319d-45ac-beab-2fe53601524e)
-```  
+
 - `/set` - POST - Adds a name to the database or upate the 
 ```
+
 {
 "name":"fans.beagles.eth",
 "owner":"0x8A13185c7da27aa575F30f5F382a5C85Dac8730b",
