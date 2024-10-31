@@ -58,7 +58,6 @@ export function stringifyNameForDb(
 
   function stringifyName(name: Name) {
     return {
-      id: name.id,
       name: name.name,
       owner: name.owner,
       addresses: name.addresses ? JSON.stringify(name.addresses) : null,

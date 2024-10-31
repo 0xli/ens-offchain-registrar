@@ -3,7 +3,6 @@ import { isAddress, isHex } from 'viem'
 import z from 'zod'
 
 export const ZodName = z.object({
-  id: z.number().optional(),
   name: z.string().regex(/^[a-z0-9-.]+$/),
   owner: z.string().refine((owner) => isAddress(owner)),
   addresses: z.record(z.string().refine((addr) => isHex(addr))).optional(),

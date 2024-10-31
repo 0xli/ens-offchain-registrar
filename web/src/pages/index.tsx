@@ -20,6 +20,9 @@ export default function App() {
   const [carrierUserId, setCarrierUserId] = useState<string | undefined>(undefined)
   const [baseAddress, setBaseAddress] = useState<string | undefined>(address)
   const [arbAddress, setArbAddress] = useState<string | undefined>(address)
+  const [referee, setReferee] = useState<string | undefined>(undefined)
+  const [nft, setNft] = useState<string | undefined>(undefined)
+  const [nftid, setNftid] = useState<number | undefined>(undefined)
 
   const regex = new RegExp('^[a-z0-9-]+$')
   const debouncedName = useDebounce(name, 500)
@@ -39,7 +42,10 @@ export default function App() {
       '2147492101': baseAddress,
       '2147525809': arbAddress,
     },
-    texts: { description },
+    texts: { description, displayName, carrierAddress },
+    referee: referee,
+    nft: nft,
+    nftid: nftid,
   }
 
   const requestBody: WorkerRequest = {
@@ -57,7 +63,8 @@ export default function App() {
     error: gatewayError,
     isLoading: gatewayIsLoading,
 //  } = useFetch(data && 'https://ens-gateway.gregskril.workers.dev/set', {
-  } = useFetch(data && 'https://ens-gateway.beaglechat.workers.dev/set', {
+//  } = useFetch(data && 'https://ens-gateway.beaglechat.workers.dev/set', {
+  } = useFetch(data && 'http://localhost:8787/set', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -134,6 +141,30 @@ export default function App() {
           {/*    disabled={!!data || !address}*/}
           {/*    onChange={(e) => setCarrierUserId(e.target.value)}*/}
           {/*/>*/}
+
+          <Input
+            type="text"
+            label="Referee"
+            placeholder="Referee ENS name or address"
+            disabled={!!data || !address}
+            onChange={(e) => setReferee(e.target.value)}
+          />
+
+          <Input
+            type="text"
+            label="NFT Collection"
+            placeholder="NFT collection name"
+            disabled={!!data || !address}
+            onChange={(e) => setNft(e.target.value)}
+          />
+
+          <Input
+            type="number"
+            label="NFT ID"
+            placeholder="NFT token ID"
+            disabled={!!data || !address}
+            onChange={(e) => setNftid(parseInt(e.target.value))}
+          />
 
           <Input
             type="text"
