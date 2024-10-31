@@ -23,15 +23,18 @@ export function parseNameFromDb(
   function parseName(name: SelectableKysely) {
     try {
       return {
+        id: name.id,
         name: name.name,
         owner: name.owner,
         addresses: name.addresses ? JSON.parse(name.addresses) : undefined,
         texts: name.texts ? JSON.parse(name.texts) : undefined,
         contenthash: name.contenthash || undefined,
+        referee: name.referee || undefined,
+        nft: name.nft || undefined,
+        nftid: name.nftid || undefined,
         createdAt: name.createdAt,
         updatedAt: name.updatedAt,
       }
-
     } catch (e) {
       return nil;
     }
@@ -55,11 +58,15 @@ export function stringifyNameForDb(
 
   function stringifyName(name: Name) {
     return {
+      id: name.id,
       name: name.name,
       owner: name.owner,
       addresses: name.addresses ? JSON.stringify(name.addresses) : null,
       texts: name.texts ? JSON.stringify(name.texts) : null,
       contenthash: name.contenthash || null,
+      referee: name.referee || null,
+      nft: name.nft || null,
+      nftid: name.nftid || null,
       updatedAt: new Date().toISOString(),
     }
   }

@@ -9,7 +9,9 @@
     "backup": "wrangler d1 execute offchaindemo --remote --command=\"SELECT * FROM names;\" > exported_data.sql",
     "restore": "wrangler d1 execute offchaindemo --local --file=./src/db/exported_data.sql",
     "dev:create-tables": "wrangler d1 execute offchaindemo --local --file=./src/db/create-tables.sql",
-    "prod:create-tables": "wrangler d1 execute offchaindemo --file=./src/db/create-tables.sql"
+    "prod:create-tables": "wrangler d1 execute offchaindemo --file=./src/db/create-tables.sql",
+    "dev:alter-tables": "wrangler d1 execute offchaindemo --local --file=./src/db/alter-table.sql",
+    "prod:alter-tables": "wrangler d1 execute offchaindemo --remote --file=./src/db/alter-table.sql"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240903.0",
