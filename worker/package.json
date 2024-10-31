@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
+    "backup": "wrangler d1 execute offchaindemo --remote --command=\"SELECT * FROM names;\" > exported_data.sql",
+    "restore": "wrangler d1 execute offchaindemo --local --file=./src/db/exported_data.sql",
     "dev:create-tables": "wrangler d1 execute offchaindemo --local --file=./src/db/create-tables.sql",
     "prod:create-tables": "wrangler d1 execute offchaindemo --file=./src/db/create-tables.sql"
   },

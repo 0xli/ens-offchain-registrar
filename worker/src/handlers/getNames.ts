@@ -1,10 +1,19 @@
 import { createKysely } from '../db/kysely'
 import { Env } from '../env'
 import { parseNameFromDb } from './functions/utils'
+import { sql } from 'kysely'
 
 export async function getNames(env: Env) {
   const db = createKysely(env)
-  const names = await db.selectFrom('names').selectAll().execute()
+  const names = await db.selectFrom('names')
+    .selectAll()
+    .where('texts', '!=', '{}')
+    .where('texts', 'like', '%carrierAddress%')
+    .where(sql`json_extract(texts, '$.carrierAddress') IS NOT NULL`)
+    .where(sql`length(json_extract(texts, '$.carrierAddress')) = 52`)
+    .orderBy('created_at', 'desc')
+    .execute()
+
   try {
     const parsedNames = parseNameFromDb(names)
 
@@ -24,7 +33,6 @@ export async function getNames(env: Env) {
       status: 200,
     })
   } catch (e) {
-    return Response.json(names,{status:500})
+    return Response.json(names, {status: 500})
   }
-
 }
