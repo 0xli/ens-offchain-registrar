@@ -52,3 +52,12 @@ If you want to use the gateway to serve offchain data that does not come from Cl
 3. Deploy the Worker: `yarn deploy`
 4. Create the default table in the prod database: `yarn run prod:create-tables`
 5. Set your environment variable: `echo <PRIVATE_KEY> | npx wrangler secret put PRIVATE_KEY` (this is the private key for one of the addresses listed as a signer on your resolver contract)
+
+## Blacklist and whitelist
+The getNames function will now return:
+- Whitelisted names (prioritized)
+- order by Recently registered names
+- Maximum of 10 names total
+- Never returns blacklisted names
+1. node ./node_modules/wrangler/bin/wrangler.js d1 execute offchaindemo --command="INSERT INTO blacklist (name, reason) VALUES ('uuu.beagles.eth', 'test account');"
+2. node ./node_modules/wrangler/bin/wrangler.js d1 execute offchaindemo --command="select * from blacklist;" 

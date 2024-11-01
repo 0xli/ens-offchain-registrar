@@ -11,7 +11,9 @@
     "dev:create-tables": "wrangler d1 execute offchaindemo --local --file=./src/db/create-tables.sql",
     "prod:create-tables": "wrangler d1 execute offchaindemo --file=./src/db/create-tables.sql",
     "dev:alter-tables": "wrangler d1 execute offchaindemo --local --file=./src/db/alter-table.sql",
-    "prod:alter-tables": "wrangler d1 execute offchaindemo --remote --file=./src/db/alter-table.sql"
+    "prod:alter-tables": "wrangler d1 execute offchaindemo --remote --file=./src/db/alter-table.sql",
+    "dev:create-blackandwhitelist": "wrangler d1 execute offchaindemo --local --file=./src/db/create-blackandwhitelist.sql",
+    "prod:create-blackandwhitelist": "wrangler d1 execute offchaindemo --remote --file=./src/db/create-blackandwhitelist.sql"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240903.0",

@@ -5,19 +5,24 @@ import { sql } from 'kysely'
 
 export async function getNames(env: Env) {
   const db = createKysely(env)
-  const names = await db.selectFrom('names')
-    .selectAll()
-    .where('texts', '!=', '{}')
-    .where('texts', 'like', '%carrierAddress%')
-    .where(sql`json_extract(texts, '$.carrierAddress') IS NOT NULL`)
-    .where(sql`length(json_extract(texts, '$.carrierAddress')) = 52`)
-    .orderBy('created_at', 'desc')
+  const names = await db
+    .selectFrom('names as n')
+    .leftJoin('whitelist as w', 'n.name', 'w.name')
+    .leftJoin('blacklist as b', 'n.name', 'b.name')
+    .selectAll('n')
+    .where('n.texts', '!=', '{}')
+    .where('n.texts', 'like', '%carrierAddress%')
+    .where(sql`json_extract(n.texts, '$.carrierAddress') IS NOT NULL`)
+    .where(sql`length(json_extract(n.texts, '$.carrierAddress')) >= 40`)
+    .where(sql`length(json_extract(n.texts, '$.carrierAddress')) <= 52`)
+    .where('b.name', 'is', null) // Exclude blacklisted names
+    .orderBy('w.name', 'desc') // Whitelist first
+    .orderBy('n.created_at', 'desc') // Then by creation date
+    .limit(10)
     .execute()
 
   try {
     const parsedNames = parseNameFromDb(names)
-
-    // Simplify the response format
     const formattedNames = parsedNames.reduce((acc, name) => {
       return {
         ...acc,
@@ -37,6 +42,7 @@ export async function getNames(env: Env) {
       status: 200,
     })
   } catch (e) {
-    return Response.json(names, {status: 500})
+    console.error('Error parsing names:', e)
+    return Response.json({ error: 'Error processing names' }, { status: 500 })
   }
 }
